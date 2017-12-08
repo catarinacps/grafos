@@ -1,4 +1,4 @@
-import grafo
+from grafo import Grafo
 import os
 import sys
 
