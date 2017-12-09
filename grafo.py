@@ -29,7 +29,7 @@ class Grafo:
         return self.__rep_grafo()
 
 
-    def dijkstra(self, begin, end):
+    def dijkstra(self, begin, end, passo):
         inicial = str(begin)
         final = str(end)
         visitados = [inicial]
@@ -48,34 +48,45 @@ class Grafo:
         
         #print(self.vertices[inicial].items())
         #print(dist_inicial)
-        print(self.vertices)
+        #print(self.vertices)
 
         while set(visitados) != set(self.vertices):
             menor = self.__min(unvistidados, dist_inicial)
             menor_vertice = menor[0]
             menor_distancia = menor[1]
             if(menor_vertice != ''):
-                print('menor  vertice '+ menor_vertice)
-                print('menor distancia '+ str(menor_distancia))
+                if(passo == 1):
+                    print('Nodo atual: '+ menor_vertice)
+                    print('Distancia ate nodo inicial: '+ str(menor_distancia))
+
                 visitados.append(menor_vertice)
-                print('nodos visitados ')
-                print(visitados)
+                if(passo):    
+                    print('Nodos visitados (S)')
+                    print(visitados)
+
                 unvistidados.remove(menor_vertice)
 
                 for vertice, peso in self.vertices[menor_vertice].items():
               	    if(peso + menor_distancia < dist_inicial[vertice]):
                         dist_inicial[vertice] = peso + menor_distancia
+
+                if passo ==1:        
+                    self.__print_tabela(dist_inicial,unvistidados)
+                    print(" ")
+
+                if(menor_vertice == final):
+                	break
             else:
             	break
 
             #print(dist_inicial)
-        print(dist_inicial[final])    
+        print("Menor distancia: " + str(dist_inicial[final]))    
                 
 
-    def __min(self, unvistidados, dist_inicial):
+    def __min(self, unvisitados, dist_inicial):
         minimo = INF
         menor_vertice =  str()
-        for vertice in unvistidados:
+        for vertice in unvisitados:
             dist = int(dist_inicial[vertice])
             if dist < minimo and dist > 0:
                 minimo = dist
@@ -93,3 +104,14 @@ class Grafo:
                 string += '  ' + '-> ' + vizinho + \
                     '  (peso: ' + str(peso) + ')\n'
         return string
+
+    def __print_tabela(self, dist_inicial, unvisitados):
+    	print("Tabela de distancias ate o nodo inicial")
+    	for variavel, peso in dist_inicial.items():
+            if variavel in unvisitados:
+                string = variavel+ " - "
+                if(peso == INF):
+                	string+= INF_CHAR
+                else:
+            	    string+= str(peso)
+                print(string)
