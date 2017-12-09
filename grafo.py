@@ -1,5 +1,6 @@
 import re
-INF = -1
+
+INF = 1000000
 INF_CHAR = u'\u221E'
 
 
@@ -27,8 +28,12 @@ class Grafo:
     def __str__(self):
         return self.__rep_grafo()
 
-    def dijkstra(self, inicial, final):
+
+    def dijkstra(self, begin, end):
+        inicial = str(begin)
+        final = str(end)
         visitados = [inicial]
+        #print(list(self.vertices.keys()))
         unvistidados = list(self.vertices.keys())
         unvistidados.remove(inicial)
 
@@ -40,29 +45,46 @@ class Grafo:
 
         for vertice, peso in self.vertices[inicial].items():
             dist_inicial[vertice] = peso
+        
+        #print(self.vertices[inicial].items())
+        #print(dist_inicial)
+        print(self.vertices)
 
-            while set(visitados) != set(self.vertices):
-                menor = self.__min(unvistidados, dist_inicial)
+        while set(visitados) != set(self.vertices):
+            menor = self.__min(unvistidados, dist_inicial)
+            menor_vertice = menor[0]
+            menor_distancia = menor[1]
+            if(menor_vertice != ''):
+                print('menor  vertice '+ menor_vertice)
+                print('menor distancia '+ str(menor_distancia))
+                visitados.append(menor_vertice)
+                print('nodos visitados ')
+                print(visitados)
+                unvistidados.remove(menor_vertice)
 
-                visitados.append(menor)
-                unvistidados.remove(menor)
+                for vertice, peso in self.vertices[menor_vertice].items():
+              	    if(peso + menor_distancia < dist_inicial[vertice]):
+                        dist_inicial[vertice] = peso + menor_distancia
+            else:
+            	break
 
-                if final != menor:
-                    for vertice, peso in self.vertices[menor].items():
-                        dist_inicial[vertice] = peso
-                        print(vertice + ' ' + peso)
-                else:
-                    break
+            #print(dist_inicial)
+        print(dist_inicial[final])    
+                
 
     def __min(self, unvistidados, dist_inicial):
         minimo = INF
+        menor_vertice =  str()
         for vertice in unvistidados:
-            dist = dist_inicial[vertice]
+            dist = int(dist_inicial[vertice])
             if dist < minimo and dist > 0:
                 minimo = dist
+                menor_vertice = vertice
 
-        return minimo
 
+        return [menor_vertice, minimo]
+
+        
     def __rep_grafo(self):
         string = ''
         for nodo, arestas in self.vertices.items():
