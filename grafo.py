@@ -37,7 +37,18 @@ class Grafo:
         for vertice, peso in self.vertices[inicial].items():
             dist_inicial[vertice] = peso
 
-        while set(visitados) != set(self.vertices):
+            while set(visitados) != set(self.vertices):
+                menor = self.__min(unvistidados, dist_inicial)
+
+                visitados.append(menor)
+                unvistidados.remove(menor)
+
+                if final != menor:
+                    for vertice, peso in self.vertices[menor].items():
+                        dist_inicial[vertice] = peso
+                        print(vertice + ' ' + peso)
+                else:
+                    break
 
     def __min(self, unvistidados, dist_inicial):
         minimo = INF
