@@ -1,5 +1,6 @@
 import re
 INF = -1
+INF_CHAR = u'\u221E'
 
 
 class Grafo:
@@ -12,16 +13,19 @@ class Grafo:
             arq.readline()
 
             for linha in arq:
-                encontrados = regex.findall()
-                if encontrados not in self.vertices:
+                encontrados = regex.findall(linha)
+                if encontrados[0] not in self.vertices:
                     self.vertices[encontrados[0]] = {}
-                if encontrados not in self.vertices:
+                if encontrados[1] not in self.vertices:
                     self.vertices[encontrados[1]] = {}
 
                 self.vertices[encontrados[0]] = {
-                    encontrados[1]: encontrados[2]}
+                    encontrados[1]: int(encontrados[2])}
                 self.vertices[encontrados[1]] = {
-                    encontrados[0]: encontrados[2]}
+                    encontrados[0]: int(encontrados[2])}
+
+    def __str__(self):
+        return self.__rep_grafo()
 
     def dijkstra(self, inicial, final):
         visitados = [inicial]
@@ -58,3 +62,12 @@ class Grafo:
                 minimo = dist
 
         return minimo
+
+    def __rep_grafo(self):
+        string = ''
+        for nodo, arestas in self.vertices.items():
+            string += nodo + '\n'
+            for vizinho, peso in arestas.items():
+                string += '  ' + '-> ' + vizinho + \
+                    '  (peso: ' + str(peso) + ')\n'
+        return string
