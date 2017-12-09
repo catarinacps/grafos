@@ -19,10 +19,10 @@ class Grafo:
                 if encontrados[1] not in self.vertices:
                     self.vertices[encontrados[1]] = {}
 
-                self.vertices[encontrados[0]] = {
-                    encontrados[1]: int(encontrados[2])}
-                self.vertices[encontrados[1]] = {
-                    encontrados[0]: int(encontrados[2])}
+                self.vertices[encontrados[0]][encontrados[1]] = int(
+                    encontrados[2])
+                self.vertices[encontrados[1]][encontrados[0]] = int(
+                    encontrados[2])
 
     def __str__(self):
         return self.__rep_grafo()
