@@ -126,7 +126,8 @@ class Grafo:
             else:
                 break
         # E, ao terminar, ocorre a impressao na tela da menor distancia do nodo inicial ao final
-        print("\nMenor distancia: " + str(dist_inicial[final]))
+        print("\nMenor distancia entre " + Color.BOLD + inicial + Color.END + ' e ' + Color.BOLD +
+              final + Color.END + ': ' + Color.CYAN + str(dist_inicial[final]) + Color.END)
 
     def __min(self, nao_visitados, dist_inicial):
         """Retorna uma tupla contendo o vertice mais proximo e a distancia ate ele.
