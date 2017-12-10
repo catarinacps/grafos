@@ -1,5 +1,4 @@
 import re
-from text_format import Color
 
 """Pacote da implementacao de um grafo em Python.
 
@@ -79,8 +78,8 @@ class Grafo:
         # Aqui ocorre a impressao do primeiro passo do algoritmo, caso o usuario tenha escolhido
         # a execucao passo a passo.
         if flag_passo == 1:
-            print(Color.BOLD + 'Nodo atual: ' + Color.END + Color.RED + inicial + Color.END)
-            print(Color.BOLD + 'Nodos visitados (S):' + Color.END)
+            print('Nodo atual: ' + inicial)
+            print('Nodos visitados (S):')
             print('{' + ', '.join(visitados) + '}')
             self.__print_tabela(dist_inicial)
 
@@ -108,13 +107,11 @@ class Grafo:
                 # Aqui ocorre a impressao do passo da execucao, se o usuario escolheu tal opcao
                 if flag_passo == 1:
                     # Nodo atual da execucao...
-                    print(Color.BOLD + 'Nodo atual: ' + Color.END +
-                          Color.RED + menor_vertice + Color.END)
+                    print('Nodo atual: ' + menor_vertice)
                     # distancia desse nodo ate o incial...
-                    print(Color.BOLD + 'Distancia ate nodo inicial: ' +
-                          Color.END + Color.BLUE + str(menor_distancia) + Color.END)
+                    print('Distancia ate nodo inicial: ' + str(menor_distancia))
                     # e o conjunto de nodos visitados...
-                    print(Color.BOLD + 'Nodos visitados (S):' + Color.END)
+                    print('Nodos visitados (S):')
                     print('{' + ', '.join(visitados) + '}')
                     # assim como a tabela de distancias ate o nodo incial
                     self.__print_tabela(dist_inicial)
@@ -126,8 +123,8 @@ class Grafo:
             else:
                 break
         # E, ao terminar, ocorre a impressao na tela da menor distancia do nodo inicial ao final
-        print("\nMenor distancia entre " + Color.BOLD + inicial + Color.END + ' e ' + Color.BOLD +
-              final + Color.END + ': ' + Color.CYAN + str(dist_inicial[final]) + Color.END)
+        print("\nMenor distancia entre " + inicial + ' e ' +
+              final + ': ' + str(dist_inicial[final]))
 
     def __min(self, nao_visitados, dist_inicial):
         """Retorna uma tupla contendo o vertice mais proximo e a distancia ate ele.
@@ -159,18 +156,18 @@ class Grafo:
         return (menor_vertice, minimo)
 
     def __rep_grafo(self):
-        string = Color.CYAN + 'Representacao do grafo:' + Color.END + '\n'
+        string = 'Representacao do grafo:' + '\n'
         for nodo, arestas in self.vertices.items():
-            string += Color.BOLD + nodo + Color.END + '\n'
+            string += nodo + '\n'
             for vizinho, peso in arestas.items():
                 string += '  ' + '-> ' + vizinho + \
                     '  (peso: ' + str(peso) + ')\n'
         return string
 
     def __print_tabela(self, dist_inicial):
-        print(Color.BOLD + "Tabela de distancias ate o nodo inicial:" + Color.END)
+        print("Tabela de distancias ate o nodo inicial:")
         for variavel, peso in dist_inicial.items():
-            string = Color.RED + variavel + Color.END + " - "
+            string = variavel + " - "
             if peso == INF:
                 string += str(INF_CHAR)
             else:
